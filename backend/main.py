@@ -151,7 +151,7 @@ tools = [
 ]
 
 
-def llm_response_problem(response: Response) -> str | Literal[False]:
+def llm_bad_response(response: Response) -> str | Literal[False]:
     """Validate the response from OpenAI"""
     if response.error:
         return response.error.message
@@ -181,7 +181,7 @@ async def call_llm(
         parallel_tool_calls=False,
     )
 
-    problem = llm_response_problem(response)
+    problem = llm_bad_response(response)
     if problem:
         if retry_count < 2:
             print(f"Retrying LLM call {retry_count + 1} of 2. Reason: {problem}")

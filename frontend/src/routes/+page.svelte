@@ -1,8 +1,9 @@
 <script lang="ts">
   import { onMount } from "svelte"
-  import { config } from "$lib/config"
   import { Button } from "$lib/components/ui/button"
   import { flyAndScale } from "$lib/utils"
+
+  const apiUrl = "http://localhost:8000"
 
   interface Order {
     id: number
@@ -33,7 +34,7 @@
 
   async function fetchOrders() {
     try {
-      const response = await fetch(`${config.apiUrl}/orders`)
+      const response = await fetch(`${apiUrl}/orders`)
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`)
       }
@@ -51,7 +52,7 @@
     isLoading = true
     errorMessage = ""
     try {
-      const response = await fetch(`${config.apiUrl}/process_order`, {
+      const response = await fetch(`${apiUrl}/process_order`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -123,9 +124,9 @@
 
 <!-- Totals Section -->
 <div class="grid grid-cols-3 gap-6">
-  {#each [{ label: "Total # of burgers", value: totals.burgers }, { label: "Total # of fries", value: totals.fries }, { label: "Total # of drinks", value: totals.drinks }] as total}
+  {#each [{ item: "burgers", value: totals.burgers }, { item: "fries", value: totals.fries }, { item: "drinks", value: totals.drinks }] as total}
     <div class="bg-white rounded-lg border-2 border-gray-300 p-6 text-center">
-      <h2 class="text-lg font-medium text-gray-700 mb-2">{total.label}</h2>
+      <h2 class="text-lg font-medium text-gray-700 mb-2">Total # of {total.item}s</h2>
       <div class="text-3xl font-bold text-gray-900">{total.value}</div>
     </div>
   {/each}
