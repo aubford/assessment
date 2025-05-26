@@ -1,6 +1,10 @@
 <script lang="ts">
-	import '../app.css';
-	let { children } = $props();
+  import "../app.css"
+  let { children } = $props()
 </script>
 
-{@render children()}
+<div class="min-h-screen bg-gray-50 p-8">
+  <div class="max-w-4xl mx-auto space-y-8">
+    {@render children()}
+  </div>
+</div>
